@@ -14,7 +14,7 @@
                   <Image url="@assets/images/background.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="vidasImagen" pickOnBounds="true" preserveRatio="true" translateY="55.0" StackPane.alignment="TOP_CENTER">
+            <ImageView fx:id="vidasImagen" fitHeight="108.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" translateY="55.0" StackPane.alignment="TOP_CENTER">
                <image>
                   <Image url="@assets/images/vidas_4.png" />
                </image>
@@ -22,6 +22,11 @@
             <Label fx:id="cronometroSeccion" alignment="TOP_CENTER" text="" textFill="RED" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font name="Alagard" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="palabraSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="WHITE" translateY="-15.0">
+               <font>
+                  <Font name="Century Gothic" size="30.0" />
                </font>
             </Label>
          </children>
