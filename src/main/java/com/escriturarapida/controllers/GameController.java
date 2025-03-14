@@ -31,8 +31,10 @@ public class GameController {
     @FXML
     private TextField escrituraSeccion;
 
-    private int tiempoRestante = 20;
+    private int tiempoBase = 20;
+    private int tiempoRestante = tiempoBase;
     private int vidas = 4;
+    private int palabrasAcertadas = 0;
     private Timeline timeline;
     private String palabraActual;
 
@@ -90,17 +92,19 @@ public class GameController {
         return words[palabraRandom.nextInt(words.length)];
     }
 
-    private void actualizarPalabraSeccion() {
-        palabraActual = cargarPalabras();
-        palabraSeccion.setText(palabraActual);
-    }
-
     private void actualizarCronometroSeccion() {
         int minutos = tiempoRestante / 60;
         int segundos = tiempoRestante % 60;
         cronometroSeccion.setText(String.format("%02d:%02d", minutos, segundos));
         cronometroSeccion.setFont(Font.font("Alagard", 30));
     }
+
+    private void actualizarPalabraSeccion() {
+        palabraActual = cargarPalabras();
+        palabraSeccion.setText(palabraActual);
+    }
+
+
 
     private void cargarEntradaTexto() {
         escrituraSeccion.setOnAction(event -> verificarPalabra());
@@ -111,6 +115,14 @@ public class GameController {
 
         if (palabraIngresada.equalsIgnoreCase(palabraActual)) {
             cambiarFondoImagen("/com/escriturarapida/assets/images/correct.png");
+            palabrasAcertadas++;
+
+            // Cada dos palabras correctas, reducir 2 segundos al tiempo restante
+            if (palabrasAcertadas % 2 == 0 && tiempoBase > 2) {
+                tiempoBase -= 2;
+                tiempoRestante = tiempoBase;
+                actualizarCronometroSeccion(); // Refrescar el tiempo en pantalla
+            }
         } else {
             cambiarFondoImagen("/com/escriturarapida/assets/images/incorrect.png");
             perderVida();

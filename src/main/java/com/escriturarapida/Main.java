@@ -13,7 +13,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("game.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 428, 409);
         stage.setResizable(false);
-        stage.setTitle("Hello!");
+        stage.setTitle("Escritura Rapida");
         stage.setScene(scene);
         stage.show();
     }
