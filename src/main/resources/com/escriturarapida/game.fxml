@@ -19,16 +19,20 @@
                   <Image url="@assets/images/vidas_4.png" />
                </image>
             </ImageView>
-            <Label fx:id="cronometroSeccion" alignment="TOP_CENTER" text="" textFill="RED" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="cronometroSeccion" alignment="TOP_CENTER" textFill="RED" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font name="Alagard" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="palabraSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="WHITE" translateY="-15.0">
+            <Label fx:id="palabraSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="171.0" textAlignment="CENTER" textFill="WHITE" translateY="-15.0">
                <font>
                   <Font name="Century Gothic" size="30.0" />
                </font>
             </Label>
+            <TextField fx:id="escrituraSeccion" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="254.0" translateY="90.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="26.0" />
+               </font></TextField>
          </children>
       </StackPane>
    </children>

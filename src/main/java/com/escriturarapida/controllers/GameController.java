@@ -4,12 +4,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Random;
@@ -17,21 +17,31 @@ import java.util.Random;
 public class GameController {
 
     @FXML
+    private ImageView fondoImagen;
+
+    @FXML
     private Label cronometroSeccion;
+
+    @FXML
+    private ImageView vidasImagen;
 
     @FXML
     private Label palabraSeccion;
 
     @FXML
-    private ImageView vidasImagen;
+    private TextField escrituraSeccion;
 
-    private int tiempoRestante = 5;
+    private int tiempoRestante = 20;
+    private int vidas = 4;
     private Timeline timeline;
+    private String palabraActual;
 
     @FXML
     public void initialize() {
         iniciarJuego();
         cargarFuente();
+        cargarEntradaTexto();
+        actualizarVidasImagen();
     }
 
     private void iniciarJuego() {
@@ -62,7 +72,7 @@ public class GameController {
         cronometroSeccion.setFont(alagardFont);
     }
 
-    public static String cargarPalabras() throws IOException {
+    public static String cargarPalabras() {
 
         String[] words = {
                 "Sol", "Mar", "Pan", "Rey", "Gas", "Casa", "Arbol", "Libro", "Gato", "Perro", "Playa", "Mesa", "Cielo",
@@ -70,7 +80,6 @@ public class GameController {
         };
 
         /*
-        ,
                 "Telefono", "Ventana", "Computadora", "Restaurante", "Biblioteca", "Aeropuerto", "Universidad", "Automovil",
                 "Television", "Supermercado", "Diccionario", "Enciclopedia", "Comunicacion", "Investigacion", "Matematicas",
                 "Geografia", "Psicologia", "Electrodomestico", "Administracion", "Constitucion", "Responsabilidad", "Independencia",
@@ -82,13 +91,8 @@ public class GameController {
     }
 
     private void actualizarPalabraSeccion() {
-        String word = null;
-        try {
-            word = cargarPalabras();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        palabraSeccion.setText(word);
+        palabraActual = cargarPalabras();
+        palabraSeccion.setText(palabraActual);
     }
 
     private void actualizarCronometroSeccion() {
@@ -98,13 +102,63 @@ public class GameController {
         cronometroSeccion.setFont(Font.font("Alagard", 30));
     }
 
+    private void cargarEntradaTexto() {
+        escrituraSeccion.setOnAction(event -> verificarPalabra());
+    }
 
+    private void verificarPalabra() {
+        String palabraIngresada = escrituraSeccion.getText().trim();
+
+        if (palabraIngresada.equalsIgnoreCase(palabraActual)) {
+            cambiarFondoImagen("/com/escriturarapida/assets/images/correct.png");
+        } else {
+            cambiarFondoImagen("/com/escriturarapida/assets/images/incorrect.png");
+            perderVida();
+        }
+
+        Timeline delay = new Timeline(new KeyFrame(Duration.seconds(0.5), event ->
+                cambiarFondoImagen("/com/escriturarapida/assets/images/background.png")
+        ));
+        delay.setCycleCount(1);
+        delay.play();
+
+        escrituraSeccion.clear();
+        actualizarPalabraSeccion();
+    }
+
+    private void perderVida() {
+        vidas--;
+
+        if (vidas <= 0) {
+            finJuego();
+        }
+        else {
+            actualizarVidasImagen();
+        }
+    }
+
+    private void actualizarVidasImagen() {
+        String rutaImagen = String.format("/com/escriturarapida/assets/images/vidas_%d.png", vidas);
+        cambiarVidasImagen(rutaImagen);
+    }
+
+    private void cambiarFondoImagen(String rutaImagen) {
+        Image nuevaImagen = new Image(Objects.requireNonNull(getClass().getResource(rutaImagen)).toExternalForm());
+        fondoImagen.setImage(nuevaImagen);
+    }
+
+    private void cambiarVidasImagen(String rutaImagen) {
+        Image nuevaImagen = new Image(Objects.requireNonNull(getClass().getResource(rutaImagen)).toExternalForm());
+        vidasImagen.setImage(nuevaImagen);
+    }
 
     private void finJuego() {
         cronometroSeccion.setText("00:00");
         palabraSeccion.setText("");
 
-        Image nuevaImagen = new Image(Objects.requireNonNull(getClass().getResource("/com/escriturarapida/assets/images/game_over.png")).toExternalForm());
-        vidasImagen.setImage(nuevaImagen);
+        cambiarVidasImagen("/com/escriturarapida/assets/images/game_over.png");
+        timeline.stop();
+        escrituraSeccion.setVisible(false);
+        palabraSeccion.setVisible(false);
     }
 }
