@@ -1,5 +1,6 @@
 package com.escriturarapida.controllers;
 
+import com.escriturarapida.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -47,12 +48,10 @@ public class GameController {
     }
 
     private void iniciarJuego() {
-
         actualizarPalabraSeccion();
         actualizarCronometroSeccion();
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-
             if (tiempoRestante <= 0) {
                 timeline.stop();
                 finJuego();
@@ -62,9 +61,10 @@ public class GameController {
             tiempoRestante--;
         }));
 
-        timeline.setCycleCount(timeline.INDEFINITE);
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
 
     private void cargarFuente() {
         String fontPath = "/com/escriturarapida/assets/fonts/alagard.ttf";
@@ -103,8 +103,6 @@ public class GameController {
         palabraActual = cargarPalabras();
         palabraSeccion.setText(palabraActual);
     }
-
-
 
     private void cargarEntradaTexto() {
         escrituraSeccion.setOnAction(event -> verificarPalabra());
@@ -165,12 +163,12 @@ public class GameController {
     }
 
     private void finJuego() {
-        cronometroSeccion.setText("00:00");
-        palabraSeccion.setText("");
+        timeline.stop();  // Detener el tiempo
 
-        cambiarVidasImagen("/com/escriturarapida/assets/images/game_over.png");
-        timeline.stop();
-        escrituraSeccion.setVisible(false);
-        palabraSeccion.setVisible(false);
+        try {
+            Main.mostrarFin(); // Cambiar a la escena de "Game Over"
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

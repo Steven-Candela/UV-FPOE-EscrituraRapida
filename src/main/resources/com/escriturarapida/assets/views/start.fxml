@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.escriturarapida.controllers.StartController">
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="fondoImagen" fitHeight="410.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/background.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="nombreJugadorSeccion" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="254.0" translateY="140.0" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Century Gothic Bold" size="26.0" />
+               </font></TextField>
+            <Button fx:id="iniciarBoton" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="109.0" style="-fx-background-color: none;" text="Iniciar" textFill="#ebe7b1" translateY="5.0">
+               <font>
+                  <Font name="Alagard" size="24.0" />
+               </font>
+            </Button>
+            <Label fx:id="tituloSeccion" alignment="CENTER" contentDisplay="CENTER" text="Escritura Rapida" textAlignment="CENTER" translateY="40.0" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Alagard" size="27.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="0.909182071685791" blue="0.5046296119689941" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9605262875556946" green="0.7364035248756409" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="descripcionSeccion" text="Ingresa tu nombre:" textFill="WHITE" translateX="-40.0" translateY="-80.0">
+               <font>
+                  <Font name="Alagard" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</VBox>

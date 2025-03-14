@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.escriturarapida.controllers.GameController">
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="fondoImagen" fitHeight="410.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="vidasImagen" fitHeight="108.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" translateY="55.0" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../images/vidas_4.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="cronometroSeccion" alignment="TOP_CENTER" textFill="RED" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Alagard" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="palabraSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="171.0" textAlignment="CENTER" textFill="WHITE" translateY="-15.0">
+               <font>
+                  <Font name="Century Gothic" size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="escrituraSeccion" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="254.0" translateY="90.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="26.0" />
+               </font></TextField>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
