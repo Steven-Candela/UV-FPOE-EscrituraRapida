@@ -6,8 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
-
-import java.io.InputStream;
+import java.net.URL;
 
 public class StartController {
 
@@ -28,24 +27,29 @@ public class StartController {
     @FXML
     public void initialize() {
         String fontPath = "/com/escriturarapida/assets/fonts/alagard.ttf";
-        InputStream fontStream = getClass().getResourceAsStream(fontPath);
+        URL fontUrl = getClass().getResource(fontPath);
 
-        if (fontStream == null) {
-            System.out.println("Error: No se pudo cargar la fuente. Verifica la ruta.");
-            return; // Sale del método si no se encuentra la fuente
-        }
+        String fontUrlStr = fontUrl.toExternalForm(); // Convierte la URL en String una sola vez
 
-        Font fuenteBoton = Font.loadFont(fontStream, 24);
-        Font fuenteTitulo = Font.loadFont(getClass().getResource(fontPath).toExternalForm(), 27);
-        Font fuenteDescripcion = Font.loadFont(getClass().getResource(fontPath).toExternalForm(), 18);
-        Font fuenteNombre = Font.loadFont(getClass().getResource(fontPath).toExternalForm(), 26);
+        // Cargar fuentes reutilizando el método
+        Font fuenteBoton = cargarFuente(fontUrlStr, 24);
+        Font fuenteTitulo = cargarFuente(fontUrlStr, 27);
+        Font fuenteDescripcion = cargarFuente(fontUrlStr, 18);
+        Font fuenteNombre = cargarFuente(fontUrlStr, 26);
 
+        // Aplicar fuentes a los elementos
         tituloSeccion.setFont(fuenteTitulo);
         descripcionSeccion.setFont(fuenteDescripcion);
         nombreJugadorSeccion.setFont(fuenteNombre);
         iniciarBoton.setFont(fuenteBoton);
+
         iniciarBoton.setOnAction(event -> iniciarJuego());
     }
+
+    private Font cargarFuente(String url, double size) {
+        return Font.loadFont(url, size);
+    }
+
 
     private void iniciarJuego() {
         jugador = nombreJugadorSeccion.getText().trim();
@@ -59,10 +63,6 @@ public class StartController {
         } else {
             nombreJugadorSeccion.setPromptText("Ingresa tu nombre!");
         }
-    }
-
-    public static String getJugador() {
-        return jugador;
     }
 }
 

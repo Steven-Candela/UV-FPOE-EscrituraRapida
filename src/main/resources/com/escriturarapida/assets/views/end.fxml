@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.escriturarapida.controllers.GameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.escriturarapida.controllers.EndController">
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
@@ -16,23 +17,27 @@
             </ImageView>
             <ImageView fx:id="vidasImagen" fitHeight="108.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" translateY="55.0" StackPane.alignment="TOP_CENTER">
                <image>
-                  <Image url="@../images/vidas_4.png" />
+                  <Image url="@../images/game_over.png" />
                </image>
             </ImageView>
-            <Label fx:id="cronometroSeccion" alignment="TOP_CENTER" textFill="RED" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="palabrasAcertadasSeccion" alignment="TOP_CENTER" textFill="WHITE" translateY="-10.0" StackPane.alignment="CENTER">
                <font>
-                  <Font name="Alagard" size="30.0" />
+                  <Font name="Alagard" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="palabraSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="171.0" textAlignment="CENTER" textFill="WHITE" translateY="-15.0">
+            <Label fx:id="tiempoTranscurridoSeccion" alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="171.0" textAlignment="CENTER" textFill="WHITE" translateY="-30.0">
                <font>
-                  <Font name="Century Gothic" size="30.0" />
+                  <Font name="Alagard" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="escrituraSeccion" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="254.0" translateY="90.0">
+            <Button fx:id="reiniciarBoton" alignment="CENTER" cacheShape="false" centerShape="false" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="42.0" prefWidth="166.0" scaleShape="false" style="-fx-background-color: none;" text="Reinciar" textAlignment="CENTER" textFill="#f8ffb7" translateY="25.0" StackPane.alignment="CENTER">
                <font>
-                  <Font name="Century Gothic Bold" size="26.0" />
-               </font></TextField>
+                  <Font name="Alagard" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </StackPane>
    </children>

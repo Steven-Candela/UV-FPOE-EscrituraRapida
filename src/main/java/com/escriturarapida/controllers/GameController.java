@@ -35,6 +35,7 @@ public class GameController {
     private int tiempoBase = 20;
     private int tiempoRestante = tiempoBase;
     private int vidas = 4;
+    private long tiempoInicio;
     private int palabrasAcertadas = 0;
     private Timeline timeline;
     private String palabraActual;
@@ -49,6 +50,8 @@ public class GameController {
 
     private void iniciarJuego() {
         actualizarPalabraSeccion();
+        palabrasAcertadas = 0; // Reinicia el contador
+        tiempoInicio = System.currentTimeMillis(); // Guarda el tiempo en milisegundos
         actualizarCronometroSeccion();
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -77,16 +80,17 @@ public class GameController {
     public static String cargarPalabras() {
 
         String[] words = {
-                "Sol", "Mar", "Pan", "Rey", "Gas", "Casa", "Arbol", "Libro", "Gato", "Perro", "Playa", "Mesa", "Cielo",
-                "Flores", "Musica", "Ciudad", "Montaña", "Amigos", "Familia", "Trabajo", "Escuela", "Hospital", "Iglesia"
+                "Sol", "Mar", "Rio", "Pez", "Ave", "Luz", "Pan", "Sal", "Ola", "Fin",
+                "Lago", "Nube", "Vino", "Casa", "Piso", "Rojo", "Loco", "Duro", "Lobo", "Miel",
+                "Perro", "Gato", "Raton", "Arbol", "Nieve", "Joven", "Flaco", "Vuelo", "Limon", "Pasto",
+                "Planta", "Cuerpo", "Dorado", "Espuma", "Ratito", "Puerta", "Nacion", "Ventil", "Nubeo", "Carros",
+                "Sombra", "Laguna", "Cabina", "Cadena", "Barrer", "Cuchara", "Palabra", "Hermano", "Ventana", "Piedra",
+                "Manzana", "Espejo", "Cortina", "Brillar", "Caminar", "Guitarra", "Estrella", "Relieve", "Montana", "Diamante",
+                "Celular", "Bandera", "Balanza", "Magenta", "Pizarra", "Piragua", "Brujula", "Hormiga", "Bocina", "Jirafa",
+                "Escuela", "Abogado", "Mensaje", "Insecto", "Paraiso", "Palmera", "Cascada", "Leonado", "Melodia", "Llamado",
+                "Arcoiris", "Creacion", "Elefante", "Formato", "Castillo", "Caminata", "Velocidad", "Brillante", "Montañoso",
+                "Crocante", "Misterio", "Esmerado", "Miradora", "Diametro", "Historia", "Radiante", "Silueta", "Tormenta", "Carruaje"
         };
-
-        /*
-                "Telefono", "Ventana", "Computadora", "Restaurante", "Biblioteca", "Aeropuerto", "Universidad", "Automovil",
-                "Television", "Supermercado", "Diccionario", "Enciclopedia", "Comunicacion", "Investigacion", "Matematicas",
-                "Geografia", "Psicologia", "Electrodomestico", "Administracion", "Constitucion", "Responsabilidad", "Independencia",
-                "Internacionalizacion", "Descentralizacion", "Contemporaneamente", "Extraordinariamente", "Inconstitucionalidad"
-         */
 
         Random palabraRandom = new Random();
         return words[palabraRandom.nextInt(words.length)];
@@ -112,7 +116,9 @@ public class GameController {
         String palabraIngresada = escrituraSeccion.getText().trim();
 
         if (palabraIngresada.equalsIgnoreCase(palabraActual)) {
+
             cambiarFondoImagen("/com/escriturarapida/assets/images/correct.png");
+
             palabrasAcertadas++;
 
             // Cada dos palabras correctas, reducir 2 segundos al tiempo restante
@@ -141,8 +147,7 @@ public class GameController {
 
         if (vidas <= 0) {
             finJuego();
-        }
-        else {
+        } else {
             actualizarVidasImagen();
         }
     }
@@ -163,10 +168,12 @@ public class GameController {
     }
 
     private void finJuego() {
-        timeline.stop();  // Detener el tiempo
+        timeline.stop();
+        long tiempoFinal = System.currentTimeMillis(); // Detener el tiempo
+        long tiempoTranscurrido = (tiempoFinal - tiempoInicio) / 1000;
 
         try {
-            Main.mostrarFin(); // Cambiar a la escena de "Game Over"
+            new Main().mostrarFin(tiempoTranscurrido, palabrasAcertadas); // Crear instancia y mostrar pantalla final
         } catch (Exception e) {
             e.printStackTrace();
         }
