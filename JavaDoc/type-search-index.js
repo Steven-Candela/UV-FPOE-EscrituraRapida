@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.escriturarapida.controllers","l":"EndController"},{"p":"com.escriturarapida.controllers","l":"GameController"},{"p":"com.escriturarapida","l":"Main"},{"p":"com.escriturarapida.controllers","l":"StartController"}];updateSearchResults();

@@ -15,6 +15,11 @@ import java.io.InputStream;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Controlador del juego
+ * Maneja la logica del juego, el tiempo, verifica las palabras que
+ * se escribio, y gestiona las vidas del jugador
+ */
 public class GameController {
 
     @FXML
@@ -40,6 +45,11 @@ public class GameController {
     private Timeline timeline;
     private String palabraActual;
 
+    /**
+     * Metodo de inicializacion de la escena "game"
+     * Carga los recursos y elementos necesarios para
+     * que funcione y tenga buen diseño
+     */
     @FXML
     public void initialize() {
         iniciarJuego();
@@ -48,10 +58,13 @@ public class GameController {
         actualizarVidasImagen();
     }
 
+    /**
+     * Inicia el juego estableciendo la palabra inicial y el tiempo restante
+     */
     private void iniciarJuego() {
         actualizarPalabraSeccion();
-        palabrasAcertadas = 0; // Reinicia el contador
-        tiempoInicio = System.currentTimeMillis(); // Guarda el tiempo en milisegundos
+        palabrasAcertadas = 0;
+        tiempoInicio = System.currentTimeMillis();
         actualizarCronometroSeccion();
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -68,7 +81,9 @@ public class GameController {
         timeline.play();
     }
 
-
+    /**
+     * Carga la fuente personalizada del juego
+     */
     private void cargarFuente() {
         String fontPath = "/com/escriturarapida/assets/fonts/alagard.ttf";
         InputStream fontStream = getClass().getResourceAsStream(fontPath);
@@ -77,6 +92,12 @@ public class GameController {
         cronometroSeccion.setFont(alagardFont);
     }
 
+    /**
+     * Genera una palabra aleatoria de la lista de palabras del juego
+     * En la lista solo hay palabras de 3, 4, 5 y 6 caracteres
+     *
+     * @return Una palabra seleccionada aleatoriamente.
+     */
     public static String cargarPalabras() {
 
         String[] words = {
@@ -85,7 +106,7 @@ public class GameController {
                 "Perro", "Gato", "Raton", "Arbol", "Nieve", "Joven", "Flaco", "Vuelo", "Limon", "Pasto",
                 "Planta", "Cuerpo", "Dorado", "Espuma", "Ratito", "Puerta", "Nacion", "Ventil", "Nubeo", "Carros",
                 "Sombra", "Laguna", "Cabina", "Cadena", "Barrer", "Cuchara", "Palabra", "Hermano", "Ventana", "Piedra",
-                "Manzana", "Espejo", "Cortina", "Brillar", "Caminar", "Guitarra", "Estrella", "Relieve", "Montana", "Diamante",
+                "Manzana", "Espejo", "Cortina", "Brillar", "Caminar", "Guitarra", "Estrella", "Relieve", "Montaña", "Diamante",
                 "Celular", "Bandera", "Balanza", "Magenta", "Pizarra", "Piragua", "Brujula", "Hormiga", "Bocina", "Jirafa",
                 "Escuela", "Abogado", "Mensaje", "Insecto", "Paraiso", "Palmera", "Cascada", "Leonado", "Melodia", "Llamado",
                 "Arcoiris", "Creacion", "Elefante", "Formato", "Castillo", "Caminata", "Velocidad", "Brillante", "Montañoso",
@@ -96,6 +117,9 @@ public class GameController {
         return words[palabraRandom.nextInt(words.length)];
     }
 
+    /**
+     * Actualiza el cronometro que se ve en la interfaz
+     */
     private void actualizarCronometroSeccion() {
         int minutos = tiempoRestante / 60;
         int segundos = tiempoRestante % 60;
@@ -103,15 +127,31 @@ public class GameController {
         cronometroSeccion.setFont(Font.font("Alagard", 30));
     }
 
+    /**
+     * Actualiza la palabra mostrada en la interfaz con una nueva palabra aleatoria
+     */
     private void actualizarPalabraSeccion() {
         palabraActual = cargarPalabras();
         palabraSeccion.setText(palabraActual);
     }
 
+    /**
+     *  Establece el caso de que cuando se presiona <<Enter>> verifica
+     *  la palabra que está ingresada en el TextField "escrituraSeccion"
+     */
     private void cargarEntradaTexto() {
-        escrituraSeccion.setOnAction(event -> verificarPalabra());
+        escrituraSeccion.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case ENTER -> verificarPalabra();
+            }
+        });
     }
 
+    /**
+     * Verifica si la palabra ingresada por el usuario es correcta
+     * Notifica al usuario si su respuesta es correcta o incorrecta
+     * y dependiendo del caso, reduce las vidas o el tiempo restante
+     */
     private void verificarPalabra() {
         String palabraIngresada = escrituraSeccion.getText().trim();
 
@@ -125,7 +165,7 @@ public class GameController {
             if (palabrasAcertadas % 2 == 0 && tiempoBase > 2) {
                 tiempoBase -= 2;
                 tiempoRestante = tiempoBase;
-                actualizarCronometroSeccion(); // Refrescar el tiempo en pantalla
+                actualizarCronometroSeccion();
             }
         } else {
             cambiarFondoImagen("/com/escriturarapida/assets/images/incorrect.png");
@@ -142,6 +182,10 @@ public class GameController {
         actualizarPalabraSeccion();
     }
 
+    /**
+     * Reduce una vida al jugador y verifica si aun le queda mas
+     * para continuar
+     */
     private void perderVida() {
         vidas--;
 
@@ -152,28 +196,45 @@ public class GameController {
         }
     }
 
+    /**
+     * Actualiza la imagen del eclipse para mostrar las vidas que tiene al jugador
+     */
     private void actualizarVidasImagen() {
         String rutaImagen = String.format("/com/escriturarapida/assets/images/vidas_%d.png", vidas);
         cambiarVidasImagen(rutaImagen);
     }
 
+    /**
+     * Reduce codigo al momento de verificar la palabra y avisar por medio
+     * de imagenes si la respuesta del jugador fue correcta o no
+     *
+     * @param rutaImagen Ruta de la nueva imagen de fondo
+     */
     private void cambiarFondoImagen(String rutaImagen) {
         Image nuevaImagen = new Image(Objects.requireNonNull(getClass().getResource(rutaImagen)).toExternalForm());
         fondoImagen.setImage(nuevaImagen);
     }
 
+    /**
+     * Cambia la imagen del eclipse
+     *
+     * @param rutaImagen Ruta de la nueva imagen de vidas
+     */
     private void cambiarVidasImagen(String rutaImagen) {
         Image nuevaImagen = new Image(Objects.requireNonNull(getClass().getResource(rutaImagen)).toExternalForm());
         vidasImagen.setImage(nuevaImagen);
     }
 
+    /**
+     * Finaliza el juego, detiene el cronómetro y muestra la pantalla de resultados
+     */
     private void finJuego() {
         timeline.stop();
-        long tiempoFinal = System.currentTimeMillis(); // Detener el tiempo
+        long tiempoFinal = System.currentTimeMillis();
         long tiempoTranscurrido = (tiempoFinal - tiempoInicio) / 1000;
 
         try {
-            new Main().mostrarFin(tiempoTranscurrido, palabrasAcertadas); // Crear instancia y mostrar pantalla final
+            new Main().mostrarFin(tiempoTranscurrido, palabrasAcertadas);
         } catch (Exception e) {
             e.printStackTrace();
         }

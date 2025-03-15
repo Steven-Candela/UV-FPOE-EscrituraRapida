@@ -10,6 +10,10 @@ import javafx.scene.text.Font;
 
 import java.net.URL;
 
+/**
+ * Controlador para la pantalla final del juego "Escritura Rápida".
+ * Muestra los resultados del juego y permite reiniciar la partida.
+ */
 public class EndController {
     @FXML
     private Label tiempoTranscurridoSeccion;
@@ -24,48 +28,56 @@ public class EndController {
     private int aciertosGuardados;
     private boolean datosRecibidos = false;
 
+    /**
+     * Metodo de inicialización de la escena "end"
+     * Configura la interfaz y asigna eventos a los controles.
+     */
     @FXML
     public void initialize() {
         if (datosRecibidos) {
-            actualizarUI();
+            actualizarResultados();
         }
 
-        // Cargar la fuente correctamente
         URL fontUrl = getClass().getResource("/com/escriturarapida/assets/fonts/alagard.ttf");
-        if (fontUrl != null) {
-            Font fuenteBoton = Font.loadFont(fontUrl.toExternalForm(), 24);
-            reiniciarBoton.setFont(fuenteBoton);
-        } else {
-            System.err.println("Fuente no encontrada: alagard.ttf");
-        }
+        Font fuenteBoton = Font.loadFont(fontUrl.toExternalForm(), 24);
+        reiniciarBoton.setFont(fuenteBoton);
 
 
         reiniciarBoton.setOnAction(event -> reinciarJuego());
 
-        // Asegurar que la escena ya está cargada antes de capturar teclas
+        // Evita que el <<Enter>> se presione accidentalmente
         Platform.runLater(() -> {
             if (reiniciarBoton.getScene() != null) {
                 reiniciarBoton.getScene().setOnKeyPressed(event -> {
                     if (event.getCode().equals(KeyCode.ENTER)) {
-                        event.consume();  // Evita que se presione accidentalmente
+                        event.consume();
                     }
                 });
             }
         });
     }
 
-
+    /**
+     * Muestra los resultados finales del juego en la interfaz.
+     *
+     * @param tiempo Tiempo transcurrido en segundos.
+     * @param aciertos Número de palabras acertadas.
+     */
     public void mostrarResultados(long tiempo, int aciertos) {
         this.tiempoGuardado = tiempo;
         this.aciertosGuardados = aciertos;
         this.datosRecibidos = true;
 
         if (tiempoTranscurridoSeccion != null && palabrasAcertadasSeccion != null) {
-            actualizarUI();
+            actualizarResultados();
         }
     }
 
-    private void actualizarUI() {
+    /**
+     * Actualiza la interfaz con los datos de tiempo que estuvo jugando y la
+     * cantidad de palabras acertadas
+     */
+    private void actualizarResultados() {
         int minutos = (int) (tiempoGuardado / 60);
         int segundos = (int) (tiempoGuardado % 60);
 
@@ -74,6 +86,9 @@ public class EndController {
         palabrasAcertadasSeccion.setText("Palabras acertadas: " + aciertosGuardados);
     }
 
+    /**
+     * Reinicia el juego y muestra la pantalla inicial
+     */
     private void reinciarJuego() {
         try {
             Main.mostrarInicio();

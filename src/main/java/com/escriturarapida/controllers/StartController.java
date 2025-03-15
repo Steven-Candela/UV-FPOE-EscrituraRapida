@@ -8,6 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import java.net.URL;
 
+/**
+ * Controlador para la pantalla de inicio
+ * para dar paso a la pantalla del juego
+ */
 public class StartController {
 
     @FXML
@@ -24,20 +28,22 @@ public class StartController {
 
     private static String jugador; // Para almacenar el nombre del jugador
 
+    /**
+     * Metodo de inicialización de la escena "start"
+     * de la pantalla de inicio
+     */
     @FXML
     public void initialize() {
         String fontPath = "/com/escriturarapida/assets/fonts/alagard.ttf";
         URL fontUrl = getClass().getResource(fontPath);
 
-        String fontUrlStr = fontUrl.toExternalForm(); // Convierte la URL en String una sola vez
+        String fontUrlStr = fontUrl.toExternalForm();
 
-        // Cargar fuentes reutilizando el método
         Font fuenteBoton = cargarFuente(fontUrlStr, 24);
         Font fuenteTitulo = cargarFuente(fontUrlStr, 27);
         Font fuenteDescripcion = cargarFuente(fontUrlStr, 18);
         Font fuenteNombre = cargarFuente(fontUrlStr, 26);
 
-        // Aplicar fuentes a los elementos
         tituloSeccion.setFont(fuenteTitulo);
         descripcionSeccion.setFont(fuenteDescripcion);
         nombreJugadorSeccion.setFont(fuenteNombre);
@@ -46,11 +52,21 @@ public class StartController {
         iniciarBoton.setOnAction(event -> iniciarJuego());
     }
 
+    /**
+     * Funcion que reduce el codigo permitiendo
+     * aplicar una fuente y tamaño a un objeto
+     *
+     * @param url Ubicacion de la fuente a aplicar
+     * @param size Tamaño que se desea aplicar a la fuente
+     */
     private Font cargarFuente(String url, double size) {
         return Font.loadFont(url, size);
     }
 
-
+    /**
+     * Inicia el juego mostrando la interfaz
+     * donde comienza el juego
+     */
     private void iniciarJuego() {
         jugador = nombreJugadorSeccion.getText().trim();
 
